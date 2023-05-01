@@ -1,3 +1,14 @@
+# My list of ignore
+detectron2/
+# data/
+config/
+output/
+output.txt
+.vscode/
+
+data/Knife_detection/
+data/labelme2coco.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
