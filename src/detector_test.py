@@ -26,7 +26,9 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5 # Confident
 predictor = DefaultPredictor(cfg)
 
 def main() -> None:
-    """Temp"""
+    """
+    Testing the model on a single image or a video.
+    """
     object_input: str = input(
         '\nChoose Your Object Type:\n\n input i: images or v: videos?'
         '\n\n\tObject Type: '
