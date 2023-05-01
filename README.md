@@ -50,4 +50,4 @@ Please follow the licensing provided by the creator of the software.
 - Our model gave us a 92% accuracy on a model trained on a custom dataset to detect knives.
 - Even though the dataset we used was small the detection of knives is not that bad.
 - The accuracy of the model increased when we increased the iteration of the model.
-- The higher the # of iteration the higher the accuracy.
+- The higher the # of iterations the higher the accuracy.
