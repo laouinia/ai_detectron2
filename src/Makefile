@@ -1,7 +1,7 @@
 PYTHON = py -3.10
 
 # Targets:
-all: detector_main.py detector.py detector_plotter.py
+main: detector_main.py detector.py
 	$(PYTHON) detector_main.py
 
 plotter: detector_plotter.py
