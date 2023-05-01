@@ -7,7 +7,9 @@ from detector import Detector
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 def main() -> None:
-    """Temp"""
+    """
+    Detectron App entry point. You choose between the type of the detection and object
+    """
     model_input: str = input(
         '\nPlease Chose Your Detection Model Type:\n\n'
         '\t1: Object Detection\n'
@@ -22,8 +24,6 @@ def main() -> None:
         '\nChoose Your Object Type:\n\n input i: images or v: videos?'
         '\n\n\tObject Type: '
     )
-
-    # object_path: str =''
 
     detect: Detector = Detector( model_type=model_input, object_type=object_input)
 
