@@ -1,10 +1,29 @@
 """Utils file for helper function."""
 import warnings
+from numpy import (
+    dtype,
+    generic,
+    ndarray,
+)
+import cv2
+import matplotlib.pyplot as plt
 
 from detectron2 import model_zoo
+# from detectron2.data import (
+#     DatasetCatalog,
+#     MetadataCatalog,
+
+# )
+
 from detectron2.config import (
     get_cfg,
     CfgNode,
+)
+
+from detectron2.utils.visualizer import (
+    Visualizer,
+    ColorMode,
+    # VisImage,
 )
 
 # Suppress UserWarning: torch.meshgrid
@@ -42,3 +61,44 @@ def cfg_train_dataloader(
     cfg.OUTPUT_DIR = output_dir
 
     return cfg
+
+def detection_in_image(image_path: str, predictor) -> None:
+    """Temp."""
+    image: ndarray[int, dtype[generic]] = cv2.imread(image_path)
+    outputs = predictor(image)
+    vis: Visualizer = Visualizer(image[:, :, ::-1],
+                     metadata={},
+                    #  scale=0.3,
+                     instance_mode=ColorMode.SEGMENTATION)
+    vis = vis.draw_instance_predictions(outputs['instances'].to('cpu'))
+
+    plt.figure(figsize=(15, 10))
+    plt.imshow(vis.get_image())
+    plt.show()
+
+
+def detection_in_video(video_path: str, predictor) -> None:
+    """Temp."""
+    capture = cv2.VideoCapture(video_path)
+    if capture.isOpened() is False:
+        return
+
+    while True:
+        video_is_on, frame = capture.read()
+        if not video_is_on:
+            break
+
+        predictions = predictor(frame)
+        vis = Visualizer(frame[:, :, ::-1],
+                         metadata={},
+                         instance_mode=ColorMode.SEGMENTATION)
+        output = vis.draw_instance_predictions(predictions['instances'].to('cpu'))
+
+        cv2.imshow('Detection in Video', output.get_image()[:, :, ::-1])
+
+        key_press: int = cv2.waitKey(1) & 0xFF
+        if key_press == ord('q'):
+            break
+
+    capture.release()
+    cv2.destroyAllWindows()
