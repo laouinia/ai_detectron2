@@ -4,6 +4,10 @@ PYTHON = py -3.10
 main: detector_main.py detector.py
 	$(PYTHON) detector_main.py
 
+device: detector_device.py
+	$(PYTHON) detector_device.py
+
+
 plotter: detector_plotter.py
 	$(PYTHON) detector_plotter.py
 
