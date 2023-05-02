@@ -1,11 +1,7 @@
 """Detectron Train """
 import os
 import pickle
-from typing import (
-    Literal
-)
-
-import torch.cuda
+from detector_device import device
 
 from detector_utils import (
     cfg_train_dataloader,
@@ -21,9 +17,6 @@ from detectron2.utils.logger import setup_logger
 from detectron2.engine import DefaultTrainer
 
 setup_logger()
-
-# Device handler
-device: Literal['cuda', 'cpu'] = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # CONFIG_FILE_PATH = 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml'
 # CHECKPOINT_URL = 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml'
