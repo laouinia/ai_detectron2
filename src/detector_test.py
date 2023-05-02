@@ -37,7 +37,6 @@ def main() -> None:
     root = tk.Tk()
     root.withdraw() # hide the root window
 
-    # ask the user to select a file
     file_path: str = filedialog.askopenfilename()
 
     if object_input.lower() == 'i':
@@ -46,15 +45,6 @@ def main() -> None:
         detection_in_video(file_path, predictor)
     else:
         print('Invalid Choice!')
-
-# Test on a single image
-# image_path: str = '../data/test/knife_1115.jpg'
-# detection_in_image(image_path, predictor)
-
-
-# # Test on a video
-# video_path: str = '../data/test/Test_video-Ghost_Recon_Breakpoint.mp4'
-# detection_in_video(video_path, predictor)
 
 if __name__ == '__main__':
     main()
