@@ -1,20 +1,16 @@
-"""Utils file for helper function."""
+"""Utils file for helper functions."""
+from typing import Any
 import warnings
 from numpy import (
     dtype,
     generic,
     ndarray,
 )
+
 import cv2
 import matplotlib.pyplot as plt
 
 from detectron2 import model_zoo
-# from detectron2.data import (
-#     DatasetCatalog,
-#     MetadataCatalog,
-
-# )
-
 from detectron2.config import (
     get_cfg,
     CfgNode,
@@ -23,7 +19,6 @@ from detectron2.config import (
 from detectron2.utils.visualizer import (
     Visualizer,
     ColorMode,
-    # VisImage,
 )
 
 # Suppress UserWarning: torch.meshgrid
@@ -44,7 +39,22 @@ def cfg_train_dataloader(
     device: str,
     output_dir: str
 ) -> CfgNode:
-    """Temp"""
+    """
+    Create a configuration node for object detection training dataloader.
+
+    Args:
+        config_file_path (str): Path to the configuration file.
+        checkpoint_url (str): URL or path to the checkpoint.
+        train_dataset_name (str): Name of the training dataset.
+        test_dataset_name (str): Name of the testing dataset.
+        num_classes (int): Number of classes to train for.
+        device (str): Device to use for training (cuda or cpu).
+        output_dir (str): Directory to save the output models.
+
+    Returns:
+        CfgNode: Configuration node for object detection training dataloader.
+    """
+
     cfg: CfgNode = get_cfg()
 
     cfg.merge_from_file(model_zoo.get_config_file(config_file_path))
@@ -57,16 +67,22 @@ def cfg_train_dataloader(
     cfg.SOLVER.MAX_ITER = 1000 # maximum number of iterations to run
     cfg.SOLVER.STEPS = [] # iterations to decay learning rate by 10x
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_classes # 1: knife is the default
-    cfg.DEVICE = device # cuda or cpu
+    cfg.DEVICE = device
     cfg.OUTPUT_DIR = output_dir
 
     return cfg
 
 def detection_in_image(image_path: str, predictor) -> None:
-    """Temp."""
+    """
+    Detect object on images
+
+    Args:
+        image_path (str): path to the image
+        predictor (Callable): returns the predictions of the model
+    """
     image: ndarray[int, dtype[generic]] = cv2.imread(image_path)
-    outputs = predictor(image)
-    vis: Visualizer = Visualizer(image[:, :, ::-1],
+    outputs: Any = predictor(image)
+    vis = Visualizer(image[:, :, ::-1],
                      metadata={},
                     #  scale=0.3,
                      instance_mode=ColorMode.SEGMENTATION)
@@ -78,7 +94,13 @@ def detection_in_image(image_path: str, predictor) -> None:
 
 
 def detection_in_video(video_path: str, predictor) -> None:
-    """Temp."""
+    """
+    Detect object on videos
+
+    Args:
+        video_path (str): Location of the video
+        predictor (Callable): return prediction of the model
+    """
     capture = cv2.VideoCapture(video_path)
     if capture.isOpened() is False:
         return
