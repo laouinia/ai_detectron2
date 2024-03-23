@@ -5,6 +5,9 @@ output/
 output.txt
 .vscode/
 __pycache__/
+.mypy_cache
+typings
+temp
 
 # Data
 data/Knife_detection/
