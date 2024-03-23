@@ -20,4 +20,4 @@ lint:
 	$(PYTHON) -m pylint detector_main.py detector.py detector_plotter.py
 
 clean:
-	rd /s /q __pycache__
+	rd /s /q __pycache__ && rd /s /q .mypy_cache
